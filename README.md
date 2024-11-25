@@ -1,4 +1,4 @@
-An Interactive Infographic on AI Research Practices.
+A simple interactive Infographic on AI Research Practices.
 
 This project displays Questionable Research Practices (QRPs) in machine learning through an interactive, user-friendly interface.
 

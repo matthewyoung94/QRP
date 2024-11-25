@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRP Visualiser</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="site-content">
+        <h1>Questionable Research Practices (QRP's) in AI Evaluation</h1>
+        <p>Click on a risk category below to explore the QRPs in detail.</p>
+
+        <div class="flowchart">
+            <div class="node" onclick="showDescription('contamination')" onmouseover="showTooltip('contamination')"
+                onmouseout="hideTooltip()"><i class="fas fa-biohazard"></i> Contamination</div>
+            <div class="node" onclick="showDescription('cherrypicking')" onmouseover="showTooltip('cherrypicking')"
+                onmouseout="hideTooltip()"><i class="fas fa-pickaxe"></i> Cherrypicking</div>
+            <div class="node" onclick="showDescription('misreporting')" onmouseover="showTooltip('misreporting')"
+                onmouseout="hideTooltip()"><i class="fas fa-file-alt"></i> Misreporting</div>
+            <div class="node" onclick="showDescription('amplifiers')" onmouseover="showTooltip('amplifiers')"
+                onmouseout="hideTooltip()"><i class="fas fa-volume-up"></i> Amplifiers</div>
+        </div>
+        <div id="tooltip" class="tooltip"></div>
+        <div id="description-container">
+            <div id="contamination" class="description">
+                <h3>Contamination</h3>
+                <h4>Training Contamination</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Training on the test set (e.g., in the web corpus)</td>
+                            <td>Training</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Prompt Contamination</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Just putting test data into the prompt (few-shot)</td>
+                            <td>Evaluation</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>RAG Contamination</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Leaking benchmark data via Retrieval Augmented Generation</td>
+                            <td>Evaluation</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Dirty Paraphrases</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rephrasing test data and training on it</td>
+                            <td>Collection</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Contamination Laundering</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Contaminated models generating training data</td>
+                            <td>Collection</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Thieved Test</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Obtaining private test labels</td>
+                            <td>Collection</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>User Contamination</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Post-training on test in user prompts</td>
+                            <td>Training</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Over-hyping</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Tuning hyperparameters further after test</td>
+                            <td>Training</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Meta-contamination</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Reusing contaminated hyperparameters/designs</td>
+                            <td>Training</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Semantic Duplicates</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Train and test set include near-identical points</td>
+                            <td>Collection</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <i>Effect:</i> Skewed benchmarks that do not reflect realistic tasks.
+            </div>
+
+            <div id="cherrypicking" class="description">
+                <h3>Cherrypicking</h3>
+                <h4>Baseline Nerfing</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Optimising training parameters of baselines less</td>
+                            <td>Evaluation</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Baseline Hacking</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Choosing weak baselines to compare to</td>
+                            <td>Evaluation</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Runtime Nerfing</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Optimising baselines’ inference parameters less</td>
+                            <td>Evaluation</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Runtime Hacking</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Post-hoc best inference parameters or decoding</td>
+                            <td>Evaluation</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Benchmark Hacking</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Choosing easier benchmarks</td>
+                            <td>Evaluation</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Subset Hacking</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Subsetting the benchmark until favorable results are obtained</td>
+                            <td>Evaluation</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Harness Hacking</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Choosing post-hoc best evaluation harness</td>
+                            <td>Evaluation</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Golden Seed</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Training/tuning with many different seeds</td>
+                            <td>Training</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Prompt Nerfing</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Undertuning prompts of baseline models (e.g., fewer few-shot examples)
+                            </td>
+                            <td>Evaluation</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Prompt Hacking</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Choosing the best prompt strategy post-hoc (few-shot examples, system/user
+                                prompt, CoT)</td>
+                            <td>Evaluation</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <i>Effect:</i> Distorted comparisons between models and misleading conclusions on their true
+                capabilities.
+            </div>
+
+            <div id="misreporting" class="description">
+                <h3>Misreporting</h3>
+                <h4>Superfluous Cog</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Redundant module added to claim novelty</td>
+                            <td>Design</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Whack-a-mole</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monitoring for specific failures and fine-tuning them away ad hoc</td>
+                            <td>Training</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Benchmark Decoration</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Pretraining on benchmark/instruction data</td>
+                            <td>Training</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>p-hacking</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> When bolding SOTA results, flawed sampling</td>
+                            <td>Reporting</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Point Scores</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Reporting single run results (no error bars)</td>
+                            <td>Reporting</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Outright Lies</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fabricating results</td>
+                            <td>Reporting</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Over/Underclaiming</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Misleading claims about model capabilities</td>
+                            <td>Reporting</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Reification</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>General claims from narrow ML benchmarks</td>
+                            <td>Reporting</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Nonzero-shot</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Claiming ‘zero-shot’ while training on examples</td>
+                            <td>Reporting</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4>Misarithmetic Mean</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Using arithmetic mean on normalised results</td>
+                            <td>Reporting</td>
+                            <td>Plausibly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Parameter Smuggling</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Under-reporting the model size; or substituting-in more embedding
+                                parameters</td>
+                            <td>Reporting</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>File Drawer</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Description</th>
+                            <th>Stage</th>
+                            <th>Accidental?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Failing to report negative benchmark studies</td>
+                            <td>Reporting</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <i>Effect:</i> Misleading or false reporting of model performance, which skews understanding of its
+                capabilities and misguides future work.
+            </div>
+
+            <div id="amplifiers" class="description">
+                <h3>Amplifiers</h3>
+            
+                <div class="table-section">
+                    <h4>Inductive Smuggling</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Stage</th>
+                                <th>Accidental?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Handcrafting inductive bias for a task</td>
+                                <td>Design</td>
+                                <td>No</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            
+                <div class="table-section">
+                    <h4>Label Noise</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Stage</th>
+                                <th>Accidental?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Using benchmarks known to be error-ridden</td>
+                                <td>Collection</td>
+                                <td>Plausibly</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            
+                <p class="effect"><strong>Effect:</strong> Artificially enhanced performance on specific tasks due to the introduction of biased or noisy data during the training process.</p>
+            </div>
+            
+        </div>
+    </div>
+    <script src="index.js" defer></script>
+    <footer class="attribution">
+        <button onclick="toggleAttribution()">About This Page</button>
+        <div id="attribution-details" style="display: none;">
+            <p>
+                This page is based on the research paper:
+                <strong>Questionable Practices in Machine Learning</strong> by:
+            </p>
+            <ul>
+                <li>Gavin Leech (<a href="mailto:gavin@arbresearch.com">gavin@arbresearch.com</a>) - Arb Research</li>
+                <li>Juan J Vazquez (<a href="mailto:juan@arbresearch.com">juan@arbresearch.com</a>) - Arb Research</li>
+                <li>Niclas Kupper - University of Bath</li>
+                <li>Misha Yagudin - Arb Research</li>
+                <li>Laurence Aitchison - University of Bristol</li>
+            </ul>
+            <p>
+                The paper discusses <em>questionable research practices (QRPs)</em> in evaluating modern ML models,
+                highlighting 44 bad practices that fall short of outright fraud but can undermine reported results.
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

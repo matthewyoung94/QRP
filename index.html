@@ -27,7 +27,7 @@
         </div>
         <div id="tooltip" class="tooltip"></div>
         <div id="description-container">
-            <div id="contamination" class="description">
+            <div id="contamination" class="description" onmouseenter="showTooltip('contamination', event)" onmouseleave="hideTooltip()">
                 <h3>Contamination</h3>
                 <h4>Training Contamination</h4>
                 <table>
@@ -212,7 +212,7 @@
                 <i>Effect:</i> Skewed benchmarks that do not reflect realistic tasks.
             </div>
 
-            <div id="cherrypicking" class="description">
+            <div id="cherrypicking" class="description" onmouseenter="showTooltip('contamination', event)" onmouseleave="hideTooltip()">
                 <h3>Cherrypicking</h3>
                 <h4>Baseline Nerfing</h4>
                 <table>
@@ -400,7 +400,7 @@
                 capabilities.
             </div>
 
-            <div id="misreporting" class="description">
+            <div id="misreporting" class="description" onmouseenter="showTooltip('contamination', event)" onmouseleave="hideTooltip()">
                 <h3>Misreporting</h3>
                 <h4>Superfluous Cog</h4>
                 <table>
@@ -622,7 +622,7 @@
                 capabilities and misguides future work.
             </div>
 
-            <div id="amplifiers" class="description">
+            <div id="amplifiers" class="description" onmouseenter="showTooltip('contamination', event)" onmouseleave="hideTooltip()">
                 <h3>Amplifiers</h3>
             
                 <div class="table-section">

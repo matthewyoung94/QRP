@@ -3,24 +3,23 @@
   --text-color: #333;
   --theme-color: #028090;
   --dark-theme-color: #114b5f;
-  --base-font-size: 25px;
+  --base-font-size: 16px; /* Reduced base font size for better scaling */
 }
 
 html,
 body {
   font-family: "Merriweather Sans", sans-serif;
   background-color: var(--main-bg-color);
-  padding: 0;
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-size: var(--base-font-size);
-  font-weight: 300;
   color: var(--text-color);
 }
 
 .site-content {
   max-width: 60rem;
-  padding: 1rem;
+  padding: 2rem;
   margin: 0 auto;
   text-align: center;
 }
@@ -32,14 +31,15 @@ h1 {
 }
 
 p {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-bottom: 2rem;
 }
 
 .flowchart {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin-top: 2rem;
 }
@@ -50,11 +50,10 @@ p {
   border-radius: 10px;
   background-color: var(--main-bg-color);
   cursor: pointer;
-  width: 220px;
   text-align: center;
   transition: all 0.3s ease;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .node:hover {
@@ -75,7 +74,6 @@ p {
   max-width: 200px;
   text-align: center;
 }
-
 
 .description {
   margin-top: 2rem;
@@ -106,13 +104,18 @@ p {
   display: block;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 768px) {
+  .flowchart .node {
+    width: calc(100% - 1rem); /* Stack items on smaller screens */
+  }
+
   html,
   body {
-    font-size: 20px;
+    font-size: 14px; /* Smaller font size on mobile */
   }
+
   h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 }
 
@@ -121,8 +124,20 @@ footer.attribution {
   padding: 20px;
   background-color: #f9f9f9;
   border-top: 1px solid #ddd;
-  font-size: 0.5em;
+  font-size: 0.8rem;
   color: #555;
+}
+
+.about-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 0.9em;
+  color: #ffffff;
+  background-color: #007acc;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 footer.attribution a {
@@ -141,6 +156,12 @@ footer.attribution ul {
 
 footer.attribution ul li {
   margin-bottom: 5px;
+}
+
+footer.attribution p, 
+footer.attribution ul,
+footer.attribution ul li {
+  font-size: inherit;
 }
 
 table {

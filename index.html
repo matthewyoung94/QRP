@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QRP Visualiser</title>
+    <link rel="icon" type="image/svg+xml" href="https://arbresearch.com/img/arb-minimal.svg">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -13,7 +14,11 @@
 <body>
     <div class="site-content">
         <h1>Questionable Research Practices (QRP's) in AI Evaluation</h1>
-        <p>Click on a risk category below to explore the QRPs in detail.</p>
+        <p>AI research can sometimes be misleading. Researchers and companies may use tricks to make their models look
+            better than they really are, such as mixing test data into training or picking only the best results to
+            report. These "questionable research practices" (QRPs) can make AI performance numbers unreliable. This page
+            explores the risks and challenges of evaluating AI models, highlighting these QRPs to help you understand
+            how they can distort the true capabilities of AI systems.</p>
 
         <div class="flowchart">
             <div class="node" onclick="showDescription('contamination')" onmouseover="showTooltip('contamination')"
@@ -27,7 +32,8 @@
         </div>
         <div id="tooltip" class="tooltip"></div>
         <div id="description-container">
-            <div id="contamination" class="description" onmouseenter="showTooltip('contamination', event)" onmouseleave="hideTooltip()">
+            <div id="contamination" class="description" onmouseenter="showTooltip('contamination', event)"
+                onmouseleave="hideTooltip()">
                 <h3>Contamination</h3>
                 <h4>Training Contamination</h4>
                 <table>
@@ -212,7 +218,8 @@
                 <i>Effect:</i> Skewed benchmarks that do not reflect realistic tasks.
             </div>
 
-            <div id="cherrypicking" class="description" onmouseenter="showTooltip('contamination', event)" onmouseleave="hideTooltip()">
+            <div id="cherrypicking" class="description" onmouseenter="showTooltip('contamination', event)"
+                onmouseleave="hideTooltip()">
                 <h3>Cherrypicking</h3>
                 <h4>Baseline Nerfing</h4>
                 <table>
@@ -400,7 +407,8 @@
                 capabilities.
             </div>
 
-            <div id="misreporting" class="description" onmouseenter="showTooltip('contamination', event)" onmouseleave="hideTooltip()">
+            <div id="misreporting" class="description" onmouseenter="showTooltip('contamination', event)"
+                onmouseleave="hideTooltip()">
                 <h3>Misreporting</h3>
                 <h4>Superfluous Cog</h4>
                 <table>
@@ -622,9 +630,10 @@
                 capabilities and misguides future work.
             </div>
 
-            <div id="amplifiers" class="description" onmouseenter="showTooltip('contamination', event)" onmouseleave="hideTooltip()">
+            <div id="amplifiers" class="description" onmouseenter="showTooltip('contamination', event)"
+                onmouseleave="hideTooltip()">
                 <h3>Amplifiers</h3>
-            
+
                 <div class="table-section">
                     <h4>Inductive Smuggling</h4>
                     <table>
@@ -644,7 +653,7 @@
                         </tbody>
                     </table>
                 </div>
-            
+
                 <div class="table-section">
                     <h4>Label Noise</h4>
                     <table>
@@ -664,19 +673,21 @@
                         </tbody>
                     </table>
                 </div>
-            
-                <p class="effect"><strong>Effect:</strong> Artificially enhanced performance on specific tasks due to the introduction of biased or noisy data during the training process.</p>
+
+                <p class="effect"><strong>Effect:</strong> Artificially enhanced performance on specific tasks due to
+                    the introduction of biased or noisy data during the training process.</p>
             </div>
-            
+
         </div>
     </div>
     <script src="index.js" defer></script>
     <footer class="attribution">
-        <button onclick="toggleAttribution()">About This Page</button>
+        <button onclick="toggleAttribution()" class="about-btn">About This Page</button>
         <div id="attribution-details" style="display: none;">
             <p>
                 This page is based on the research paper:
-                <strong>Questionable Practices in Machine Learning</strong> by:
+                <strong><a href="https://arxiv.org/pdf/2407.12220" target="_blank"
+                        rel="noopener noreferrer">Questionable Practices in Machine Learning</a></strong> by:
             </p>
             <ul>
                 <li>Gavin Leech (<a href="mailto:gavin@arbresearch.com">gavin@arbresearch.com</a>) - Arb Research</li>
@@ -687,7 +698,7 @@
             </ul>
             <p>
                 The paper discusses <em>questionable research practices (QRPs)</em> in evaluating modern ML models,
-                highlighting 44 bad practices that fall short of outright fraud but can undermine reported results.
+                highlighting 44 bad practices that can undermine reported results.
             </p>
         </div>
     </footer>
